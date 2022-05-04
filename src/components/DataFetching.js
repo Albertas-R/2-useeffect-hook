@@ -29,13 +29,39 @@ import axios from "axios";
 // }
 
 // Fetching data with useEffect (1 post)
+// function DataFetching() {
+//   const [post, setPost] = useState({});
+//   const [id, setId] = useState(1);
+
+//   useEffect(() => {
+//     axios
+//       .get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+//       .then((response) => {
+//         console.log(response);
+//         setPost(response.data);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   }, [id]);
+
+//   return (
+//     <div>
+//       <input type="text" value={id} onChange={(e) => setId(e.target.value)} />
+//       <div>{post.title}</div>
+//     </div>
+//   );
+// }
+
+// Fetching data with useEffect (trigger effect on a button click)
 function DataFetching() {
   const [post, setPost] = useState({});
   const [id, setId] = useState(1);
+  const [idFromButtonClick, setIdFromButtonClick] = useState(1);
 
   useEffect(() => {
     axios
-      .get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+      .get(`https://jsonplaceholder.typicode.com/posts/${idFromButtonClick}`)
       .then((response) => {
         console.log(response);
         setPost(response.data);
@@ -43,11 +69,18 @@ function DataFetching() {
       .catch((error) => {
         console.log(error);
       });
-  }, [id]);
+  }, [idFromButtonClick]);
+
+  const handleClick = () => {
+    setIdFromButtonClick(id);
+  };
 
   return (
     <div>
       <input type="text" value={id} onChange={(e) => setId(e.target.value)} />
+      <button type="button" onClick={handleClick}>
+        Fetch Post
+      </button>
       <div>{post.title}</div>
     </div>
   );
